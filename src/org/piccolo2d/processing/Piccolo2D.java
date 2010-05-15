@@ -20,7 +20,7 @@
     <http://www.gnu.org/licenses/>.
 
 */
-package org.piccolo2d;
+package org.piccolo2d.processing;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -66,31 +66,16 @@ public final class Piccolo2D
     public Piccolo2D(final PApplet applet)
     {
         super();
+        if (applet == null)
+        {
+            throw new IllegalArgumentException("applet must not be null");
+        }
         this.applet = applet;
-        this.canvas = new POffscreenCanvas(applet.width, applet.height);
-        // todo:  throw exception if applet has incompatible graphics context
+        applet.registerDraw(this);
+        canvas = new POffscreenCanvas(applet.width, applet.height);
     }
 
 
-    /**
-     * Call this method once every time <code>draw()</code> is called
-     * in a sketch.  For example
-     *
-     * <pre>
-     * Piccolo2D piccolo;
-     *
-     * void setup()
-     * {
-     *   size(400, 300);
-     *   piccolo = new Piccolo2D(this);
-     * }
-     *
-     * void draw()
-     * {
-     *   piccolo.draw();
-     * }
-     * </pre>
-     */
     public void draw()
     {
         Graphics2D g2 = ((PGraphicsJava2D) applet.g).g2;
@@ -142,56 +127,56 @@ public final class Piccolo2D
     public PText createText(final String text)
     {
         PText textNode = new PText(text);
-        canvas.getCamera().getLayer(0).addChild(textNode);
+        getLayer().addChild(textNode);
         return textNode;
     }
 
     public PHtmlView createHtmlView(final String text)
     {
         PHtmlView htmlView = new PHtmlView(text);
-        canvas.getCamera().getLayer(0).addChild(htmlView);
+        getLayer().addChild(htmlView);
         return htmlView;
     }
 
     public PImage createImage(final Image image)
     {
         PImage imageNode = new PImage(image);
-        canvas.getCamera().getLayer(0).addChild(imageNode);
+        getLayer().addChild(imageNode);
         return imageNode;    
     }
 
-    public PImage createImage(final PImage image)
+    public PImage createImage(final processing.core.PImage image)
     {
         PImage imageNode = new PImage(image.getImage());
-        canvas.getCamera().getLayer(0).addChild(imageNode);
+        getLayer().addChild(imageNode);
         return imageNode;    
     }
 
     public PPath createEllipse(final float x, final float y, final float w, final float h)
     {
         PPath pathNode = PPath.createEllipse(x, y, w, h);
-        canvas.getCamera().getLayer(0).addChild(pathNode);
+        getLayer().addChild(pathNode);
         return pathNode;
     }
 
     public PPath createLine(final float x1, final float y1, final float x2, final float y2)
     {
         PPath pathNode = PPath.createLine(x1, y1, x2, y2);
-        canvas.getCamera().getLayer(0).addChild(pathNode);
+        getLayer().addChild(pathNode);
         return pathNode;
     }
 
     public PPath createPolyline(final float[] xp, final float[] yp)
     {
         PPath pathNode = PPath.createPolyline(xp, yp);
-        canvas.getCamera().getLayer(0).addChild(pathNode);
+        getLayer().addChild(pathNode);
         return pathNode;
     }
 
     public PPath createRectangle(final float x, final float y, final float w, final float h)
     {
         PPath pathNode = PPath.createRectangle(x, y, w, h);
-        canvas.getCamera().getLayer(0).addChild(pathNode);
+        getLayer().addChild(pathNode);
         return pathNode;
     }
 
@@ -199,7 +184,7 @@ public final class Piccolo2D
                                       final float arcWidth, final float arcHeight)
     {
         PPath pathNode = PPath.createRoundRectangle(x, y, w, h, arcWidth, arcHeight);
-        canvas.getCamera().getLayer(0).addChild(pathNode);
+        getLayer().addChild(pathNode);
         return pathNode;
     }
 
