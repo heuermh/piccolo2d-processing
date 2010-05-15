@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 mkdir piccolo2d
 mkdir piccolo2d/library
