@@ -27,6 +27,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 
 import org.piccolo2d.PCamera;
 import org.piccolo2d.PLayer;
@@ -101,8 +102,6 @@ public final class Piccolo2D
     {
         canvas.setBackground(color);
     }
-
-    //public void setBackground(final int color)
 
     public PRoot getRoot()
     {
@@ -195,6 +194,17 @@ public final class Piccolo2D
     {
         //if (abs(sx - sy) > 0.001)
         canvas.getCamera().scaleView(s);
+    }
+
+    public void scaleViewAboutPoint(final float s, final float x, final float y)
+    {
+        canvas.getCamera().scaleViewAboutPoint(s, x, y);
+    }
+
+    public void scaleViewAboutCenter(final float s)
+    {
+        Point2D center = canvas.getCamera().getViewBounds().getCenter2D();
+        scaleViewAboutPoint(s, (float) center.getX(), (float) center.getY());
     }
 
     public void translateView(final float tx, final float ty)
