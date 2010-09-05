@@ -38,8 +38,10 @@ import org.piccolo2d.activities.PTransformActivity;
 
 import org.piccolo2d.nodes.PHtmlView;
 import org.piccolo2d.nodes.PImage;
-import org.piccolo2d.nodes.PPath;
 import org.piccolo2d.nodes.PText;
+
+import org.piccolo2d.jdk16.nodes.PArea;
+import org.piccolo2d.jdk16.nodes.PPath;
 
 import processing.core.PApplet;
 
@@ -151,6 +153,40 @@ public final class Piccolo2D
         return imageNode;    
     }
 
+    public PArea createArea()
+    {
+        PArea area = new PArea();
+        getLayer().addChild(area);
+        return area;
+    }
+
+    public PPath createArc(final float x,
+                           final float y,
+                           final float width,
+                           final float height,
+                           final float start,
+                           final float extent,
+                           final int type)
+    {
+        PPath pathNode = PPath.createArc(x, y, width, height, start, extent, type);
+        getLayer().addChild(pathNode);
+        return pathNode;
+    }
+
+    public PPath createCubicCurve(final float x1,
+                                  final float y1,
+                                  final float ctrlx1,
+                                  final float ctrly1,
+                                  final float ctrlx2,
+                                  final float ctrly2,
+                                  final float x2,
+                                  final float y2)
+    {
+        PPath pathNode = PPath.createCubicCurve(x1, y1, ctrlx1, ctrly1, ctrlx2, ctrly2, x2, y2);
+        getLayer().addChild(pathNode);
+        return pathNode;
+    }
+
     public PPath createEllipse(final float x, final float y, final float w, final float h)
     {
         PPath pathNode = PPath.createEllipse(x, y, w, h);
@@ -165,9 +201,14 @@ public final class Piccolo2D
         return pathNode;
     }
 
-    public PPath createPolyline(final float[] xp, final float[] yp)
+    public PPath createQuadCurve(final float x1,
+                                 final float y1,
+                                 final float ctrlx,
+                                 final float ctrly,
+                                 final float x2,
+                                 final float y2)
     {
-        PPath pathNode = PPath.createPolyline(xp, yp);
+        PPath pathNode = PPath.createQuadCurve(x1, y1, ctrlx, ctrly, x2, y2);
         getLayer().addChild(pathNode);
         return pathNode;
     }
