@@ -40,6 +40,8 @@ import org.piccolo2d.nodes.PHtmlView;
 import org.piccolo2d.nodes.PImage;
 import org.piccolo2d.nodes.PText;
 
+import org.piccolo2d.util.PPaintContext;
+
 import org.piccolo2d.jdk16.nodes.PArea;
 import org.piccolo2d.jdk16.nodes.PPath;
 
@@ -59,6 +61,12 @@ public final class Piccolo2D
 
     /** Offscreen canvas for this Piccolo2D library. */
     private final POffscreenCanvas canvas;
+
+    /** Alias to <code>PPaintContext.HIGH_QUALITY_RENDERING</code>. */
+    public static final int HIGH = PPaintContext.HIGH_QUALITY_RENDERING;
+
+    /** Alias to <code>PPaintContext.LOW_QUALITY_RENDERING</code>. */
+    public static final int LOW = PPaintContext.LOW_QUALITY_RENDERING;
 
 
     /**
@@ -103,6 +111,16 @@ public final class Piccolo2D
     public void setBackground(final Color color)
     {
         canvas.setBackground(color);
+    }
+
+    public int getRenderQuality()
+    {
+        return canvas.getRenderQuality();
+    }
+
+    public void setRenderQuality(final int renderQuality)
+    {
+        canvas.setRenderQuality(renderQuality);
     }
 
     public PRoot getRoot()
