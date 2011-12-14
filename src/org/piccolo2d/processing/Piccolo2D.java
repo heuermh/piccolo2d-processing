@@ -25,8 +25,10 @@ package org.piccolo2d.processing;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Stroke;
 
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 
 import org.piccolo2d.PCamera;
@@ -227,6 +229,34 @@ public final class Piccolo2D
                                  final float y2)
     {
         PPath pathNode = PPath.createQuadCurve(x1, y1, ctrlx, ctrly, x2, y2);
+        getLayer().addChild(pathNode);
+        return pathNode;
+    }
+
+    public PPath.Double createPath(final Path2D.Double path)
+    {
+        PPath.Double pathNode = new PPath.Double(path);
+        getLayer().addChild(pathNode);
+        return pathNode;
+    }
+
+    public PPath.Float createPath(final Path2D.Float path)
+    {
+        PPath.Float pathNode = new PPath.Float(path);
+        getLayer().addChild(pathNode);
+        return pathNode;
+    }
+
+    public PPath.Double createPath(final Path2D.Double path, final Stroke stroke)
+    {
+        PPath.Double pathNode = new PPath.Double(path, stroke);
+        getLayer().addChild(pathNode);
+        return pathNode;
+    }
+
+    public PPath.Float createPath(final Path2D.Float path, final Stroke stroke)
+    {
+        PPath.Float pathNode = new PPath.Float(path, stroke);
         getLayer().addChild(pathNode);
         return pathNode;
     }
