@@ -9,6 +9,6 @@ cp lib/piccolo2d-core-2.0-SNAPSHOT.jar lib/piccolo2d-jdk16-2.0-SNAPSHOT.jar picc
 cp -R src piccolo2d
 cp -R examples piccolo2d
 cd src
-javac -source 1.6 -target 1.6 -classpath "../lib/processing-core-1.5.1.jar:../lib/piccolo2d-core-2.0-SNAPSHOT.jar:../lib/piccolo2d-jdk16-2.0-SNAPSHOT.jar" org/piccolo2d/processing/Piccolo2D.java
+javac -source 1.6 -target 1.6 -classpath "../lib/processing-core-1.5.1.jar;../lib/piccolo2d-core-2.0-SNAPSHOT.jar;../lib/piccolo2d-jdk16-2.0-SNAPSHOT.jar" org/piccolo2d/processing/Piccolo2D.java
 jar cvf ../piccolo2d/library/piccolo2d.jar org/piccolo2d/processing/Piccolo2D.class
 cd ..

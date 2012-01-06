@@ -1,7 +1,7 @@
 /*
 
     Piccolo2D library for Processing.
-    Copyright (c) 2010 held jointly by the individual authors.
+    Copyright (c) 2010-2012 held jointly by the individual authors.
 
     This file is part of Piccolo2D library for Processing.
 
@@ -33,6 +33,7 @@ import java.awt.geom.Point2D;
 
 import org.piccolo2d.PCamera;
 import org.piccolo2d.PLayer;
+import org.piccolo2d.PNode;
 import org.piccolo2d.POffscreenCanvas;
 import org.piccolo2d.PRoot;
 
@@ -144,6 +145,8 @@ public final class Piccolo2D
     {
         return canvas;
     }
+
+    // create nodes on first layer
 
     public PText createText(final String text)
     {
@@ -278,10 +281,10 @@ public final class Piccolo2D
 
     // pick(...)
 
-    //public void scaleView(final float sx, final float sy)
+    // transform view
+
     public void scaleView(final float s)
     {
-        //if (abs(sx - sy) > 0.001)
         canvas.getCamera().scaleView(s);
     }
 
@@ -301,62 +304,288 @@ public final class Piccolo2D
         canvas.getCamera().translateView(tx, ty);
     }
 
-    //public PTransformActivity animateScaleView(final float sx, final float sy, final long duration)
+    public void scaleView(final float sx, final float sy)
+    {
+        PCamera camera = canvas.getCamera();
+        AffineTransform transform = camera.getViewTransform();
+        transform.scale(sx, sy);
+        camera.setViewTransform(transform);
+    }
+
+    public void shearView(final float shx, final float shy)
+    {
+        PCamera camera = canvas.getCamera();
+        AffineTransform transform = camera.getViewTransform();
+        transform.shear(shx, shy);
+        camera.setViewTransform(transform);
+    }
+
+    public void rotateView(final float theta)
+    {
+        PCamera camera = canvas.getCamera();
+        AffineTransform transform = camera.getViewTransform();
+        transform.rotate(theta);
+        camera.setViewTransform(transform);
+    }
+
+    public void rotateView(final float theta, final float anchorx, final float anchory)
+    {
+        PCamera camera = canvas.getCamera();
+        AffineTransform transform = camera.getViewTransform();
+        transform.rotate(theta, anchorx, anchory);
+        camera.setViewTransform(transform);
+    }
+
+    public void rotateView(final float vecx, final float vecy)
+    {
+        PCamera camera = canvas.getCamera();
+        AffineTransform transform = camera.getViewTransform();
+        transform.rotate(vecx, vecy);
+        camera.setViewTransform(transform);
+    }
+
+    public void rotateView(final float vecx, final float vecy, final float anchorx, final float anchory)
+    {
+        PCamera camera = canvas.getCamera();
+        AffineTransform transform = camera.getViewTransform();
+        transform.rotate(vecx, vecy, anchorx, anchory);
+        camera.setViewTransform(transform);
+    }
+
+    public void quadrantRotateView(final int quadrants)
+    {
+        PCamera camera = canvas.getCamera();
+        AffineTransform transform = camera.getViewTransform();
+        transform.quadrantRotate(quadrants);
+        camera.setViewTransform(transform);
+    }
+
+    public void quadrantRotateView(final int quadrants, final float anchorx, final float anchory)
+    {
+        PCamera camera = canvas.getCamera();
+        AffineTransform transform = camera.getViewTransform();
+        transform.quadrantRotate(quadrants, anchorx, anchory);
+        camera.setViewTransform(transform);
+    }
+
+    // animate view transforms
+
     public PTransformActivity animateScaleView(final float s, final long duration)
     {
-        AffineTransform transform = canvas.getCamera().getViewTransform();
-        //transform.scale(sx, sy);
-        transform.scale(s, s);
-        return canvas.getCamera().animateViewToTransform(transform, duration);
+        return animateScaleView(s, s, duration);
+    }
+
+    public PTransformActivity animateScaleView(final float sx, final float sy, final long duration)
+    {
+        PCamera camera = canvas.getCamera();
+        AffineTransform transform = camera.getViewTransform();
+        transform.scale(sx, sy);
+        return camera.animateViewToTransform(transform, duration);
     }
 
     public PTransformActivity animateTranslateView(final float sx, final float sy, final long duration)
     {
-        AffineTransform transform = canvas.getCamera().getViewTransform();
+        PCamera camera = canvas.getCamera();
+        AffineTransform transform = camera.getViewTransform();
         transform.translate(sx, sy);
-        return canvas.getCamera().animateViewToTransform(transform, duration);
+        return camera.animateViewToTransform(transform, duration);
     }
 
+    public PTransformActivity animateShearView(final float shx, final float shy, final long duration)
+    {
+        PCamera camera = canvas.getCamera();
+        AffineTransform transform = camera.getViewTransform();
+        transform.shear(shx, shy);
+        return camera.animateViewToTransform(transform, duration);
+    }
+
+    public PTransformActivity animateRotateView(final float theta, final long duration)
+    {
+        PCamera camera = canvas.getCamera();
+        AffineTransform transform = camera.getViewTransform();
+        transform.rotate(theta);
+        camera.setViewTransform(transform);
+        return camera.animateViewToTransform(transform, duration);
+    }
+
+    public PTransformActivity animateRotateView(final float theta, final float anchorx, final float anchory, final long duration)
+    {
+        PCamera camera = canvas.getCamera();
+        AffineTransform transform = camera.getViewTransform();
+        transform.rotate(theta, anchorx, anchory);
+        return camera.animateViewToTransform(transform, duration);
+    }
+
+    public PTransformActivity animateRotateView(final float vecx, final float vecy, final long duration)
+    {
+        PCamera camera = canvas.getCamera();
+        AffineTransform transform = camera.getViewTransform();
+        transform.rotate(vecx, vecy);
+        return camera.animateViewToTransform(transform, duration);
+    }
+
+    public PTransformActivity animateRotateView(final float vecx, final float vecy, final float anchorx, final float anchory, final long duration)
+    {
+        PCamera camera = canvas.getCamera();
+        AffineTransform transform = camera.getViewTransform();
+        transform.rotate(vecx, vecy, anchorx, anchory);
+        return camera.animateViewToTransform(transform, duration);
+    }
+
+    public PTransformActivity animateQuadrantRotateView(final int quadrants, final long duration)
+    {
+        PCamera camera = canvas.getCamera();
+        AffineTransform transform = camera.getViewTransform();
+        transform.quadrantRotate(quadrants);
+        return camera.animateViewToTransform(transform, duration);
+    }
+
+    public PTransformActivity animateQuadrantRotateView(final int quadrants, final float anchorx, final float anchory, final long duration)
+    {
+        PCamera camera = canvas.getCamera();
+        AffineTransform transform = camera.getViewTransform();
+        transform.quadrantRotate(quadrants, anchorx, anchory);
+        return camera.animateViewToTransform(transform, duration);
+    }
+
+    // transform nodes
+
+    public void scale(final float sx, final float sy, final PNode node)
+    {
+        AffineTransform transform = node.getTransform();
+        transform.scale(sx, sy);
+        node.setTransform(transform);
+    }
+
+    public void shear(final float shx, final float shy, final PNode node)
+    {
+        AffineTransform transform = node.getTransform();
+        transform.shear(shx, shy);
+        node.setTransform(transform);
+    }
+
+    public void translate(final float tx, final float ty, final PNode node)
+    {
+        AffineTransform transform = node.getTransform();
+        transform.translate(tx, ty);
+        node.setTransform(transform);
+    }
+
+    public void rotate(final float theta, final PNode node)
+    {
+        AffineTransform transform = node.getTransform();
+        transform.rotate(theta);
+        node.setTransform(transform);
+    }
+
+    public void rotate(final float theta, final float anchorx, final float anchory, final PNode node)
+    {
+        AffineTransform transform = node.getTransform();
+        transform.rotate(theta, anchorx, anchory);
+        node.setTransform(transform);
+    }
+
+    public void rotate(final float vecx, final float vecy, final PNode node)
+    {
+        AffineTransform transform = node.getTransform();
+        transform.rotate(vecx, vecy);
+        node.setTransform(transform);
+    }
+
+    public void rotate(final float vecx, final float vecy, final float anchorx, final float anchory, final PNode node)
+    {
+        AffineTransform transform = node.getTransform();
+        transform.rotate(vecx, vecy, anchorx, anchory);
+        node.setTransform(transform);
+    }
+
+    public void quadrantRotate(final int quadrants, final PNode node)
+    {
+        AffineTransform transform = node.getTransform();
+        transform.quadrantRotate(quadrants);
+        node.setTransform(transform);
+    }
+
+    public void quadrantRotate(final int quadrants, final float anchorx, final float anchory, final PNode node)
+    {
+        AffineTransform transform = node.getTransform();
+        transform.quadrantRotate(quadrants, anchorx, anchory);
+        node.setTransform(transform);
+    }
+
+    // animate node transforms
+
+    public PTransformActivity animateScale(final float s, final PNode node, final long duration)
+    {
+        return animateScaleView(s, s, duration);
+    }
+
+    public PTransformActivity animateScale(final float sx, final float sy, final PNode node, final long duration)
+    {
+        AffineTransform transform = node.getTransform();
+        transform.scale(sx, sy);
+        return node.animateToTransform(transform, duration);
+    }
+
+    public PTransformActivity animateTranslate(final float sx, final float sy, final PNode node, final long duration)
+    {
+        AffineTransform transform = node.getTransform();
+        transform.translate(sx, sy);
+        return node.animateToTransform(transform, duration);
+    }
+
+    public PTransformActivity animateShear(final float shx, final float shy, final PNode node, final long duration)
+    {
+        AffineTransform transform = node.getTransform();
+        transform.shear(shx, shy);
+        return node.animateToTransform(transform, duration);
+    }
+
+    public PTransformActivity animateRotate(final float theta, final PNode node, final long duration)
+    {
+        AffineTransform transform = node.getTransform();
+        transform.rotate(theta);
+        node.setTransform(transform);
+        return node.animateToTransform(transform, duration);
+    }
+
+    public PTransformActivity animateRotate(final float theta, final float anchorx, final float anchory, final PNode node, final long duration)
+    {
+        AffineTransform transform = node.getTransform();
+        transform.rotate(theta, anchorx, anchory);
+        return node.animateToTransform(transform, duration);
+    }
+
+    public PTransformActivity animateRotate(final float vecx, final float vecy, final PNode node, final long duration)
+    {
+        AffineTransform transform = node.getTransform();
+        transform.rotate(vecx, vecy);
+        return node.animateToTransform(transform, duration);
+    }
+
+    public PTransformActivity animateRotate(final float vecx, final float vecy, final float anchorx, final float anchory, final PNode node, final long duration)
+    {
+        AffineTransform transform = node.getTransform();
+        transform.rotate(vecx, vecy, anchorx, anchory);
+        return node.animateToTransform(transform, duration);
+    }
+
+    public PTransformActivity animateQuadrantRotate(final int quadrants, final PNode node, final long duration)
+    {
+        AffineTransform transform = node.getTransform();
+        transform.quadrantRotate(quadrants);
+        return node.animateToTransform(transform, duration);
+    }
+
+    public PTransformActivity animateQuadrantRotate(final int quadrants, final float anchorx, final float anchory, final PNode node, final long duration)
+    {
+        AffineTransform transform = node.getTransform();
+        transform.quadrantRotate(quadrants, anchorx, anchory);
+        return node.animateToTransform(transform, duration);
+    }
+
+
     /*
-      scale(sx, sy, PNode);
-      shear(shx, shy, PNode);
-      translate(tx, ty, PNode);  or offset?
-      rotate(theta, PNode);
-      rotate(vecx, vecy, PNode);
-      rotate(theta, anchorx, anchory, PNode);
-      rotate(vecx, vecy, anchorx, anchory, PNode);
-      quadrantRotate(quadrants, PNode);
-      quadrantRotate(quadrants, anchorx, anchory, PNode);
-
-      scaleView(sx, sy);
-      shearView(shx, shy);
-      translateView(tx, ty);
-      rotateView(theta);
-      rotateView(vecx, vecy);
-      rotateView(theta, anchorx, anchory);
-      rotateView(vecx, vecy, anchorx, anchory);
-      quadrantRotateView(quadrants);
-      quadrantRotateView(quadrants, anchorx, anchory);
       constrainView({ALL, CENTER, NONE});
-
-      animateScale(sx, sy, PNode, duration);
-      animateShear(shx, shy, PNode, duration);
-      animateTranslate(tx, ty, PNode, duration);
-      animateRotate(theta, PNode, duration);
-      animateRotate(vecx, vecy, PNode, duration);
-      animateRotate(theta, anchorx, anchory, PNode, duration);
-      animateRotate(vecx, vecy, anchorx, anchory, PNode, duration);
-      animateQuadrantRotate(quadrants, PNode, duration);
-      animateQuadrantRotate(quadrants, anchorx, anchory, PNode, duration);
-
-      animateScaleView(sx, sy, duration);
-      animateShearView(shx, shy, duration);
-      animateTranslateView(tx, ty, duration);
-      animateRotateView(theta, duration);
-      animateRotateView(vecx, vecy, duration);
-      animateRotateView(theta, anchorx, anchory, duration);
-      animateRotateView(vecx, vecy, anchorx, anchory, duration);
-      animateQuadrantRotateView(quadrants, duration);
-      animateQuadrantRotateView(quadrants, anchorx, anchory, duration);
     */
 }
