@@ -39,14 +39,13 @@ import org.piccolo2d.PRoot;
 
 import org.piccolo2d.activities.PTransformActivity;
 
+import org.piccolo2d.nodes.PArea;
 import org.piccolo2d.nodes.PHtmlView;
 import org.piccolo2d.nodes.PImage;
+import org.piccolo2d.nodes.PPath;
 import org.piccolo2d.nodes.PText;
 
 import org.piccolo2d.util.PPaintContext;
-
-import org.piccolo2d.jdk16.nodes.PArea;
-import org.piccolo2d.jdk16.nodes.PPath;
 
 import processing.core.PApplet;
 
