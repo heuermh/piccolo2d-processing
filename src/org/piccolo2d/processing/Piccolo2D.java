@@ -84,7 +84,7 @@ public final class Piccolo2D
             throw new IllegalArgumentException("applet must not be null");
         }
         this.applet = applet;
-        applet.registerDraw(this);
+        applet.registerMethod("draw", this);
         canvas = new POffscreenCanvas(applet.width, applet.height);
     }
 
