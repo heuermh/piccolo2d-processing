@@ -10,6 +10,6 @@ cp lib/piccolo2d-core-3.0-SNAPSHOT.jar piccolo2d/library
 cp -R src piccolo2d
 cp -R examples piccolo2d
 cd src
-javac -source 1.6 -target 1.6 -classpath "../lib/processing-core-2.0b7.jar:../lib/piccolo2d-core-3.0-SNAPSHOT.jar" org/piccolo2d/processing/Piccolo2D.java
+javac -source 1.6 -target 1.6 -classpath "../lib/processing-core-2.0.jar:../lib/piccolo2d-core-3.0-SNAPSHOT.jar" org/piccolo2d/processing/Piccolo2D.java
 jar cvf ../piccolo2d/library/piccolo2d.jar org/piccolo2d/processing/Piccolo2D.class
 cd ..
