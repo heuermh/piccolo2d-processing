@@ -6,7 +6,6 @@ Piccolo2D library for Processing.
 
 Piccolo2D
 
-http://www.piccolo2d.org
 http://code.google.com/p/piccolo2d
 
 
