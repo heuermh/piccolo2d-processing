@@ -3,7 +3,7 @@
 mkdir piccolo2d
 mkdir piccolo2d/library
 cp COPYING piccolo2d
-cp README piccolo2d
+cp README.md piccolo2d
 cp library.properties piccolo2d
 cp lib/piccolo2d-core-3.0-license.txt piccolo2d/piccolo2d-license.txt
 cp lib/piccolo2d-core-3.0.jar piccolo2d/library
