@@ -1,7 +1,7 @@
 /*
 
     Piccolo2D library for Processing.
-    Copyright (c) 2010-2013 held jointly by the individual authors.
+    Copyright (c) 2010-2019 held jointly by the individual authors.
 
     This file is part of Piccolo2D library for Processing.
 
@@ -47,9 +47,9 @@ import org.piccolo2d.nodes.PText;
 
 import org.piccolo2d.util.PPaintContext;
 
-import processing.core.PApplet;
+import processing.awt.PGraphicsJava2D;
 
-import processing.core.PGraphicsJava2D;
+import processing.core.PApplet;
 
 /**
  * Piccolo2D library for Processing.

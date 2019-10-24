@@ -18,7 +18,7 @@ http://www.processing.org
 
 <pre>
 Piccolo2D library for Processing.
-Copyright (c) 2010-2013 held jointly by the individual authors.
+Copyright (c) 2010-2019 held jointly by the individual authors.
 
 Piccolo2D library for Processing is free software: you can redistribute it and/or
 modify it under the terms of the GNU General Public License as published by

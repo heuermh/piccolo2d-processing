@@ -1,7 +1,7 @@
 /*
 
     Piccolo2D library for Processing.
-    Copyright (c) 2010-2013 held jointly by the individual authors.
+    Copyright (c) 2010-2019 held jointly by the individual authors.
 
     This file is part of Piccolo2D library for Processing.
 
